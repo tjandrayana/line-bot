@@ -143,7 +143,7 @@ func reply(dat Data) error {
 	agent.IsJson = true
 	agent.Json = rep
 
-	agent.Headers["Authorization"] = os.Getenv("channelAccessToken")
+	agent.Headers["Authorization"] = "Bearer " + os.Getenv("channelAccessToken")
 
 	body, err := agent.DoReq()
 	if err != nil {
