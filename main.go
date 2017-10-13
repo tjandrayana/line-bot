@@ -4,6 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
+	"fmt"
 	"io/ioutil"
 	"log"
 
@@ -50,9 +51,7 @@ func Triger(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"message": string(body),
-	})
+	fmt.Printf("\n%+v\n", string(body))
 
 	if !validateSignature(channelSecret, c.Request.Header.Get("X-Line-Signature"), body) {
 		log.Println("error : ", err)
