@@ -11,7 +11,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/tokopedia/sauron/src/utils"
+	"github.com/tjandrayana/line-bot/utils"
 )
 
 type Data struct {
