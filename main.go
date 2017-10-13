@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +19,7 @@ func main() {
 	r := gin.New()
 	r.GET("/ping", ping)
 
-	http.HandleFunc("/line/triger", Triger)
+	r.POST("/line/triger", Triger)
 
 	r.Run()
 }
@@ -33,14 +32,15 @@ func ping(c *gin.Context) {
 }
 
 // ParseRequest func
-func Triger(w http.ResponseWriter, r *http.Request) {
-	events, err := bot.ParseRequest(r)
+func Triger(c *gin.Context) {
+
+	events, err := bot.ParseRequest(c.Request)
 
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
-			w.WriteHeader(400)
+			c.Writer.WriteHeader(400)
 		} else {
-			w.WriteHeader(500)
+			c.Writer.WriteHeader(500)
 		}
 		return
 	}
