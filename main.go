@@ -11,6 +11,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/tokopedia/sauron/src/utils"
 )
 
 type Data struct {
@@ -28,6 +29,12 @@ type Data struct {
 			Text string `json:"text"`
 		} `json:"message"`
 	} `json:"events"`
+}
+
+type Message struct {
+	Type string `json:"type"`
+	ID   string `json:"id"`
+	Text string `json:"text"`
 }
 
 // var bot *linebot.Client
@@ -89,6 +96,8 @@ func Triger(c *gin.Context) {
 		log.Println(err)
 	}
 
+	reply(dat)
+
 	fmt.Println("\nSuccess\n")
 
 }
@@ -101,4 +110,48 @@ func validateSignature(channelSecret, signature string, body []byte) bool {
 	hash := hmac.New(sha256.New, []byte(channelSecret))
 	hash.Write(body)
 	return hmac.Equal(decoded, hash.Sum(nil))
+}
+
+type Reply struct {
+	ReplyToken string    `json:"replyToken"`
+	Messages   []Message `json:"messages"`
+}
+
+func reply(dat Data) error {
+
+	mess1 := Message{
+		Type: "text",
+		Text: "Hai User ... ",
+	}
+
+	mess2 := Message{
+		Type: "text",
+		Text: "May I help you ...? ",
+	}
+
+	messages := []Message{mess1, mess2}
+
+	rep := Reply{
+		ReplyToken: dat.Events[0].ReplyToken,
+		Messages:   messages,
+	}
+
+	agent := utils.NewHTTPRequest()
+	agent.Url = "https://api.line.me"
+	agent.Path = "/v2/bot/message/reply"
+	agent.Method = "POST"
+	agent.IsJson = true
+	agent.Json = rep
+
+	agent.Headers["Authorization"] = os.Getenv("channelAccessToken")
+
+	body, err := agent.DoReq()
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	fmt.Printf("\n Body : %+v\n", string(*body))
+
+	return nil
 }
