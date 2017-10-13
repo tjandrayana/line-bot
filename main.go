@@ -1,20 +1,43 @@
 package main
 
 import (
-	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"net/http"
+	"io/ioutil"
+	"log"
 	"os"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
+type Data struct {
+	Events []struct {
+		Type       string `json:"type"`
+		ReplyToken string `json:"replyToken"`
+		Source     struct {
+			UserID string `json:"userId"`
+			Type   string `json:"type"`
+		} `json:"source"`
+		Timestamp int64 `json:"timestamp"`
+		Message   struct {
+			Type string `json:"type"`
+			ID   string `json:"id"`
+			Text string `json:"text"`
+		} `json:"message"`
+	} `json:"events"`
+}
+
+// var bot *linebot.Client
+
 func main() {
+	// bot, err := linebot.New(os.Getenv("channelSecret"), os.Getenv("channelAccessToken"))
+
+	// log.Println("Bot:", bot, " err:", err)
 
 	r := gin.New()
-	r.Use(gin.Logger())
 	r.GET("/ping", ping)
 
 	r.POST("/line/triger", Triger)
@@ -29,106 +52,53 @@ func ping(c *gin.Context) {
 	})
 }
 
+// func triger(c *gin.Context) {
+
+// 	body, err := ioutil.ReadAll(c.Request.Body)
+// 	if err != nil {
+// 		log.Println("Error : ", err)
+// 		return
+// 	}
+
+// 	c.JSON(200, gin.H{
+// 		"message": string(body),
+// 	})
+
+// }
+
 // ParseRequest func
 func Triger(c *gin.Context) {
+	defer c.Request.Body.Close()
+	channelSecret := os.Getenv("channelSecret")
 
-	var botRequest BotRequest
-	if c.Bind(&botRequest) == nil {
-		c.JSON(http.StatusOK, gin.H{"status": fmt.Sprintf("request convert error, request data is %+v", botRequest)})
+	body, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Println("error : ", err)
 		return
 	}
 
-	fmt.Printf("\n%+v\n", botRequest)
+	fmt.Printf("\n%+v\n", string(body))
 
-	// for _, result := range botRequest.Result {
-
-	// 	request := SendRequest{
-	// 		To:        []string{result.Content.From},
-	// 		ToChannel: ToChannel,
-	// 		EventType: EventType,
-	// 		Content: Content{
-	// 			ContentType: result.Content.ContentType,
-	// 			ToType:      result.Content.ToType,
-	// 			Text:        result.Content.Text,
-	// 		},
-	// 	}
-
-	// 	if _, err := post(request); err != nil {
-	// 		log.Printf("Error: %s", err.Error())
-	// 	}
-	// }
-
-	c.JSON(http.StatusOK, gin.H{"status": "end"})
-
-}
-
-type BotRequestBody struct {
-	Request BotRequest `json:"Request"`
-}
-
-//BotRequest
-type BotRequest struct {
-	Result []BotResult `json:"result"`
-}
-
-type BotResult struct {
-	From        string   `json:"from"`
-	FromChannel string   `json:"fromChannel"`
-	To          []string `json:"to"`
-	ToChannel   string   `json:"toChannel"`
-	EventType   string   `json:"eventType"`
-	ID          string   `json:"id"`
-	Content     Content  `json:"content"`
-}
-
-type Content struct {
-	ID          string   `json:"id"`
-	ContentType int      `json:"contentType"`
-	From        string   `json:"from"`
-	CreatedTime int      `json:"createdTime"`
-	To          []string `json:"to"`
-	ToType      int      `json:"toType"`
-	Text        string   `json:"text"`
-}
-
-type SendRequest struct {
-	To        []string `json:"to"`
-	ToChannel int      `json:"toChannel"`
-	EventType string   `json:"eventType"`
-	Content   Content  `json:"content"`
-}
-
-const (
-	EndPoint  = "https://api.line.me/v2/bot/message/push"
-	ToChannel = 1540625385
-	EventType = "138311608800106203"
-)
-
-func callbackHandler(c *gin.Context) {
-
-}
-
-func post(r SendRequest) (*http.Response, error) {
-	b, _ := json.Marshal(r)
-	req, _ := http.NewRequest(
-		"POST",
-		EndPoint,
-		bytes.NewBuffer(b),
-	)
-
-	req = setHeader(req)
-
-	client := &http.Client{
-		Timeout: time.Duration(15 * time.Second),
+	if !validateSignature(channelSecret, c.Request.Header.Get("X-Line-Signature"), body) {
+		log.Println("error : ", err)
+		return
 	}
 
-	return client.Do(req)
+	var dat Data
+	if err := json.Unmarshal(body, &dat); err != nil {
+		log.Println(err)
+	}
+
+	fmt.Println("\nSuccess\n")
+
 }
 
-func setHeader(req *http.Request) *http.Request {
-	req.Header.Add("Content-Type", "application/json; charset=UTF-8")
-	req.Header.Add("X-Line-ChannelID", os.Getenv("channelID"))
-	req.Header.Add("X-Line-ChannelSecret", os.Getenv("channelSecret"))
-	// req.Header.Add("X-Line-Trusted-User-With-ACL", os.Getenv("LINE_CHANNEL_MID"))
-	return req
+func validateSignature(channelSecret, signature string, body []byte) bool {
+	decoded, err := base64.StdEncoding.DecodeString(signature)
+	if err != nil {
+		return false
+	}
+	hash := hmac.New(sha256.New, []byte(channelSecret))
+	hash.Write(body)
+	return hmac.Equal(decoded, hash.Sum(nil))
 }
