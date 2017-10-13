@@ -1,28 +1,26 @@
 package main
 
 import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/base64"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/line/line-bot-sdk-go/linebot"
 )
 
-// var bot *linebot.Client
+var bot *linebot.Client
 
 func main() {
-	// bot, err := linebot.New(os.Getenv("channelSecret"), os.Getenv("channelAccessToken"))
+	bot, err := linebot.New(os.Getenv("channelSecret"), os.Getenv("channelAccessToken"))
 
-	// log.Println("Bot:", bot, " err:", err)
+	log.Println("Bot:", bot, " err:", err)
 
 	r := gin.New()
 	r.GET("/ping", ping)
 
-	r.POST("/line/triger", Triger)
+	http.HandleFunc("/line/triger", Triger)
 
 	r.Run()
 }
@@ -34,48 +32,29 @@ func ping(c *gin.Context) {
 	})
 }
 
-// func triger(c *gin.Context) {
-
-// 	body, err := ioutil.ReadAll(c.Request.Body)
-// 	if err != nil {
-// 		log.Println("Error : ", err)
-// 		return
-// 	}
-
-// 	c.JSON(200, gin.H{
-// 		"message": string(body),
-// 	})
-
-// }
-
 // ParseRequest func
-func Triger(c *gin.Context) {
-	defer c.Request.Body.Close()
-	channelSecret := os.Getenv("channelSecret")
+func Triger(w http.ResponseWriter, r *http.Request) {
+	events, err := bot.ParseRequest(r)
 
-	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
-		log.Println("error : ", err)
+		if err == linebot.ErrInvalidSignature {
+			w.WriteHeader(400)
+		} else {
+			w.WriteHeader(500)
+		}
 		return
 	}
 
-	fmt.Printf("\n%+v\n", string(body))
-
-	if !validateSignature(channelSecret, c.Request.Header.Get("X-Line-Signature"), body) {
-		log.Println("error : ", err)
-		return
+	for _, event := range events {
+		fmt.Printf("\n%+v\n", event)
+		if event.Type == linebot.EventTypeMessage {
+			switch message := event.Message.(type) {
+			case *linebot.TextMessage:
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" OK!")).Do(); err != nil {
+					log.Print(err)
+				}
+			}
+		}
 	}
 
-	fmt.Println("\nSuccess\n")
-
-}
-
-func validateSignature(channelSecret, signature string, body []byte) bool {
-	decoded, err := base64.StdEncoding.DecodeString(signature)
-	if err != nil {
-		return false
-	}
-	hash := hmac.New(sha256.New, []byte(channelSecret))
-	hash.Write(body)
-	return hmac.Equal(decoded, hash.Sum(nil))
 }
