@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -39,23 +38,25 @@ func Triger(c *gin.Context) {
 		return
 	}
 
-	for _, result := range botRequest.Result {
+	fmt.Printf("\n%+v\n", botRequest)
 
-		request := SendRequest{
-			To:        []string{result.Content.From},
-			ToChannel: ToChannel,
-			EventType: EventType,
-			Content: Content{
-				ContentType: result.Content.ContentType,
-				ToType:      result.Content.ToType,
-				Text:        result.Content.Text,
-			},
-		}
+	// for _, result := range botRequest.Result {
 
-		if _, err := post(request); err != nil {
-			log.Printf("Error: %s", err.Error())
-		}
-	}
+	// 	request := SendRequest{
+	// 		To:        []string{result.Content.From},
+	// 		ToChannel: ToChannel,
+	// 		EventType: EventType,
+	// 		Content: Content{
+	// 			ContentType: result.Content.ContentType,
+	// 			ToType:      result.Content.ToType,
+	// 			Text:        result.Content.Text,
+	// 		},
+	// 	}
+
+	// 	if _, err := post(request); err != nil {
+	// 		log.Printf("Error: %s", err.Error())
+	// 	}
+	// }
 
 	c.JSON(http.StatusOK, gin.H{"status": "end"})
 
