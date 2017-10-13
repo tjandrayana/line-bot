@@ -9,7 +9,7 @@ func main() {
 
 	fmt.Println("Halo")
 	http.HandleFunc("/index/", viewHandler)
-	http.ListenAndServe(":1000", nil)
+	http.ListenAndServe(":8080", nil)
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
