@@ -1,22 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	r := gin.New()
+	r.GET("/ping", ping)
 
-	fmt.Println("Halo")
-	http.HandleFunc("/index/", viewHandler)
-	http.ListenAndServe(":8080", nil)
+	r.Run()
 }
 
-func viewHandler(w http.ResponseWriter, r *http.Request) {
+func ping(c *gin.Context) {
 
-	a := []byte("test : aaa")
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(a)
-
+	c.JSON(200, gin.H{
+		"message": "pong",
+	})
 }
