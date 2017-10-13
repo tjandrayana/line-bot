@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"net/url"
 	"os"
 	"time"
 
@@ -99,7 +98,7 @@ type SendRequest struct {
 }
 
 const (
-	EndPoint  = "https://trialbot-api.line.me/v1/events"
+	EndPoint  = "https://api.line.me/v2/bot/message/push"
 	ToChannel = 1540625385
 	EventType = "138311608800106203"
 )
@@ -118,10 +117,8 @@ func post(r SendRequest) (*http.Response, error) {
 
 	req = setHeader(req)
 
-	proxyURL, _ := url.Parse(os.Getenv("FIXIE_URL"))
 	client := &http.Client{
-		Timeout:   time.Duration(15 * time.Second),
-		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURL)},
+		Timeout: time.Duration(15 * time.Second),
 	}
 
 	return client.Do(req)
@@ -129,8 +126,8 @@ func post(r SendRequest) (*http.Response, error) {
 
 func setHeader(req *http.Request) *http.Request {
 	req.Header.Add("Content-Type", "application/json; charset=UTF-8")
-	req.Header.Add("X-Line-ChannelID", os.Getenv("LINE_CHANNEL_ID"))
-	req.Header.Add("X-Line-ChannelSecret", os.Getenv("LINE_CHANNEL_SECRET"))
-	req.Header.Add("X-Line-Trusted-User-With-ACL", os.Getenv("LINE_CHANNEL_MID"))
+	req.Header.Add("X-Line-ChannelID", os.Getenv("channelID"))
+	req.Header.Add("X-Line-ChannelSecret", os.Getenv("channelSecret"))
+	// req.Header.Add("X-Line-Trusted-User-With-ACL", os.Getenv("LINE_CHANNEL_MID"))
 	return req
 }
