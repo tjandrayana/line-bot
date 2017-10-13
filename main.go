@@ -53,6 +53,10 @@ func Triger(c *gin.Context) {
 
 	fmt.Printf("\n%+v\n", string(body))
 
+	c.JSON(200, gin.H{
+		"message": string(body),
+	})
+
 	if !validateSignature(channelSecret, c.Request.Header.Get("X-Line-Signature"), body) {
 		log.Println("error : ", err)
 		return
