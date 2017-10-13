@@ -7,11 +7,18 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
+// var bot *linebot.Client
+
 func main() {
+	// bot, err := linebot.New(os.Getenv("channelSecret"), os.Getenv("channelAccessToken"))
+
+	// log.Println("Bot:", bot, " err:", err)
+
 	r := gin.New()
 	r.GET("/ping", ping)
 
@@ -44,7 +51,8 @@ func ping(c *gin.Context) {
 // ParseRequest func
 func Triger(c *gin.Context) {
 	defer c.Request.Body.Close()
-	var channelSecret string
+	channelSecret := os.Getenv("channelSecret")
+
 	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Println("error : ", err)
@@ -53,18 +61,12 @@ func Triger(c *gin.Context) {
 
 	fmt.Printf("\n%+v\n", string(body))
 
-	c.JSON(200, gin.H{
-		"message": string(body),
-	})
-
 	if !validateSignature(channelSecret, c.Request.Header.Get("X-Line-Signature"), body) {
 		log.Println("error : ", err)
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"message": string(body),
-	})
+	fmt.Println("\nSuccess\n")
 
 }
 
