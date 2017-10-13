@@ -99,7 +99,7 @@ type SendRequest struct {
 }
 
 const (
-	EndPoint  = "tjandrayana-line-bot.herokuapp.com/line"
+	EndPoint  = "https://trialbot-api.line.me/v1/events"
 	ToChannel = 1540625385
 	EventType = "138311608800106203"
 )
