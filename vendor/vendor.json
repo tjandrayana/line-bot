@@ -39,6 +39,12 @@
 			"revisionTime": "2017-04-27T21:32:20Z"
 		},
 		{
+			"checksumSHA1": "X+BD6MW0HxsVKO2V937qHd7y7D8=",
+			"path": "github.com/line/line-bot-sdk-go/linebot",
+			"revision": "d0ee4ad2b49fa50ae881f7c92b430cedeeb7b98e",
+			"revisionTime": "2017-09-21T11:04:48Z"
+		},
+		{
 			"checksumSHA1": "y/A5iuvwjytQE2CqVuphQRXR2nI=",
 			"path": "github.com/mattn/go-isatty",
 			"revision": "a5cdd64afdee435007ee3e9f6ed4684af949d568",
@@ -49,6 +55,18 @@
 			"path": "github.com/ugorji/go/codec",
 			"revision": "f76f59a92f8224c695c0e2c401b9ad17e820a8f5",
 			"revisionTime": "2017-10-12T20:44:12Z"
+		},
+		{
+			"checksumSHA1": "Y+HGqEkYM15ir+J93MEaHdyFy0c=",
+			"path": "golang.org/x/net/context",
+			"revision": "feeb485667d1fdabe727840fe00adc22431bc86e",
+			"revisionTime": "2017-05-02T17:39:58Z"
+		},
+		{
+			"checksumSHA1": "WHc3uByvGaMcnSoI21fhzYgbOgg=",
+			"path": "golang.org/x/net/context/ctxhttp",
+			"revision": "feeb485667d1fdabe727840fe00adc22431bc86e",
+			"revisionTime": "2017-05-02T17:39:58Z"
 		},
 		{
 			"checksumSHA1": "PugQbLLjnbBSj+NOXRYBVRnLuuQ=",
