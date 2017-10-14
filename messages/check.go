@@ -42,7 +42,7 @@ func CheckMessage(dat Data) []Message {
 		if flag {
 			result1, _ = gt.Translate(msg, "in", "en")
 			result1 = strings.ToLower(result1)
-			similarity := checkSimilarity(msg, result1)
+			similarity := checkSimilarity2(msg, result1)
 			fmt.Println("\nResult1 = ", result1, "\nSimilarity : ", similarity)
 
 			if similarity < 0.85 {
@@ -58,7 +58,7 @@ func CheckMessage(dat Data) []Message {
 			result2, _ = gt.Translate(msg, "en", "in")
 			result2 = strings.ToLower(result2)
 
-			similarity := checkSimilarity(msg, result2)
+			similarity := checkSimilarity2(msg, result2)
 			fmt.Println("\nResult2 = ", result2, "\nSimilarity : ", similarity)
 			if similarity < 0.85 {
 				if result2 != msg {
@@ -119,7 +119,52 @@ func checkSimilarity(messages, messages2 string) float64 {
 		}
 	}
 
+	fmt.Println("count = ", count)
+
 	similarity = float64(count / len(arrMessages1))
+
+	return similarity
+}
+
+func checkSimilarity2(messages, messages2 string) float64 {
+	var similarity float64
+
+	arrMessages1 := strings.Split(messages, " ")
+	arrMessages2 := strings.Split(messages2, " ")
+
+	map1 := make(map[string]bool)
+	map2 := make(map[string]bool)
+	globalMap := make(map[string]bool)
+
+	for i := range arrMessages1 {
+		if arrMessages1[i] == " " || arrMessages1[i] == "" {
+			continue
+		}
+		map1[arrMessages1[i]] = true
+
+		globalMap[arrMessages1[i]] = true
+	}
+	for i := range arrMessages2 {
+		if arrMessages2[i] == " " || arrMessages2[i] == "" {
+			continue
+		}
+		map2[arrMessages2[i]] = true
+
+		globalMap[arrMessages2[i]] = true
+	}
+
+	var count int
+
+	for key, _ := range map1 {
+		for key2, _ := range map2 {
+			if key == key2 {
+				count++
+			}
+		}
+	}
+
+	fmt.Println("count = ", count, "\tlenmap2 = ", len(map2))
+	similarity = float64(float64(count) / float64(len(map2)))
 
 	return similarity
 }
