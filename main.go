@@ -107,7 +107,11 @@ func validateSignature(channelSecret, signature string, body []byte) bool {
 type Reply struct {
 	ReplyToken string    `json:"replyToken,omitempty"`
 	Messages   []Message `json:"messages"`
-	To         string    `json:"to,omitempty"`
+}
+
+type PushMessage struct {
+	Messages []Message `json:"messages"`
+	To       string    `json:"to"`
 }
 
 func reply(dat Data) error {
@@ -144,7 +148,7 @@ func reply(dat Data) error {
 		return err
 	}
 
-	fmt.Printf("\n Body : %+v\n", string(*body))
+	fmt.Printf("\n Body Reply : %+v\n", string(*body))
 
 	return nil
 }
@@ -163,7 +167,7 @@ func pushMessage(dat Data) error {
 
 	messages := []Message{mess1, mess2}
 
-	rep := Reply{
+	rep := PushMessage{
 		To:       "U772346mikhael73",
 		Messages: messages,
 	}
@@ -183,7 +187,7 @@ func pushMessage(dat Data) error {
 		return err
 	}
 
-	fmt.Printf("\n Body : %+v\n", string(*body))
+	fmt.Printf("\n Body Push Message : %+v\n", string(*body))
 
 	return nil
 }
