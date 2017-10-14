@@ -11,6 +11,8 @@ import (
 	"os"
 	"strings"
 
+	gt "github.com/bas24/googletranslatefree"
+
 	"github.com/gin-gonic/gin"
 	"github.com/tjandrayana/line-bot/utils"
 )
@@ -44,6 +46,10 @@ func main() {
 	// bot, err := linebot.New(os.Getenv("channelSecret"), os.Getenv("channelAccessToken"))
 
 	// log.Println("Bot:", bot, " err:", err)
+
+	// const text string = `buku`
+	// result, _ := gt.Translate(text, "in", "eng")
+	// fmt.Println(result)
 
 	r := gin.New()
 	r.GET("/ping", ping)
@@ -193,22 +199,11 @@ func checkMessage(dat Data) []Message {
 		var reply string
 
 		msg := strings.ToLower(dat.Events[0].Message.Text)
-		switch msg {
-		case "pagi":
-			reply = "selamat pagi"
-		case "siang":
-			reply = "selamat siang"
-		case "sore":
-			reply = "selamat sore"
-		case "malam":
-			reply = "selamat malam"
-		case "tes":
-			reply = "tes"
-		case "test":
-			reply = "test"
-		default:
-			reply = msg + " juga ... hehehe"
-		}
+
+		result, _ := gt.Translate(msg, "in", "eng")
+		fmt.Println(result)
+
+		reply = fmt.Sprintf("In english %s means : \n%s", msg, result)
 
 		mess1 := Message{
 			Type: "text",
@@ -220,4 +215,43 @@ func checkMessage(dat Data) []Message {
 
 	return messages
 
+}
+
+var CollectionBahasaGaul map[string]string
+
+func fillCollection() {
+	CollectionBahasaGaul = make(map[string]string)
+}
+
+type Means struct {
+	Word        string `json:"word"`
+	Definitions []struct {
+		Definition   string `json:"definition"`
+		PartOfSpeech string `json:"partOfSpeech"`
+	} `json:"definitions"`
+}
+
+func DefinitionWord(word string) (Means, error) {
+
+	var means Means
+
+	agent := utils.NewHTTPRequest()
+	agent.Url = "http://dictionary.cambridge.org/"
+	agent.Path = "dictionary/indonesian-english" + word
+	agent.Method = "GET"
+
+	body, err := agent.DoReq()
+	if err != nil {
+		log.Println(err)
+		return means, err
+	}
+
+	// if err := json.Unmarshal(*body, &means); err != nil {
+	// 	log.Println(err)
+	// 	return means, err
+	// }
+
+	fmt.Printf("\n BODY = %+v\n", string(*body))
+
+	return means, nil
 }
