@@ -168,7 +168,7 @@ func pushMessage(dat Data) error {
 	messages := []Message{mess1, mess2}
 
 	rep := PushMessage{
-		To:       "U772346mikhael73",
+		To:       wawan,
 		Messages: messages,
 	}
 
@@ -191,3 +191,7 @@ func pushMessage(dat Data) error {
 
 	return nil
 }
+
+const (
+	wawan string = "U0d7ba35d0e9e44f209d37f9bdf81d2b9"
+)
