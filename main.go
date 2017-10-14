@@ -47,8 +47,8 @@ func main() {
 
 	// log.Println("Bot:", bot, " err:", err)
 
-	// const text string = `buku`
-	// result, _ := gt.Translate(text, "in", "eng")
+	// const text string = `my book was stole`
+	// result, _ := gt.Translate(text, "en", "in")
 	// fmt.Println(result)
 
 	User = make(map[string]string)
@@ -217,7 +217,7 @@ func checkMessage(dat Data) []Message {
 		msg := strings.ToLower(dat.Events[0].Message.Text)
 
 		if flag {
-			result1, _ = gt.Translate(msg, "in", "eng")
+			result1, _ = gt.Translate(msg, "in", "en")
 			result1 = strings.ToLower(result1)
 			fmt.Println(result1)
 			if result1 != msg {
@@ -228,9 +228,9 @@ func checkMessage(dat Data) []Message {
 		}
 
 		if flag {
-			result1, _ = gt.Translate(msg, "eng", "in")
-			result1 = strings.ToLower(result1)
-			fmt.Println(result1)
+			result2, _ = gt.Translate(msg, "en", "in")
+			result2 = strings.ToLower(result2)
+			fmt.Println(result2)
 			if result2 != msg {
 				reply = fmt.Sprintf("%s, In Indonesian '%s' \nmeans : \n'%s'", namaUser, msg, result2)
 				flag = false
@@ -238,7 +238,17 @@ func checkMessage(dat Data) []Message {
 		}
 
 		if flag {
-			reply = fmt.Sprintf("%s, '%s' \nmeans : \n'%s'", namaUser, msg, result2)
+			result1, _ = gt.Translate(msg, "in", "en")
+			result1 = strings.ToLower(result1)
+
+			reply = namaUser + ", "
+			reply = fmt.Sprintf("%s In english '%s' \nmeans : \n'%s'\n", reply, msg, result1)
+
+			result2, _ = gt.Translate(msg, "en", "in")
+			result2 = strings.ToLower(result2)
+
+			reply = fmt.Sprintf("\nAND %s In Indonesian '%s' \nmeans : \n'%s'", reply, msg, result2)
+
 		}
 
 		mess1 := Message{
