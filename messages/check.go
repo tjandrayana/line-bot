@@ -16,12 +16,22 @@ func CheckMessage(dat Data) []Message {
 	if dat.Events[0].Type == "follow" {
 		mess1 := Message{
 			Type: "text",
-			Text: "Thx ya sudah add aku sebagai teman kamu.",
+			Text: fmt.Sprintf(`
+				Terima kasih sudah menambahkan aku sebagai teman kamu.\n
+				Perkenalkan namaku Hero, Aku adalah bot chat yang sedang dikembangkan ...\n
+				Aku akan mencoba membantumu dalam berkomunikasi\n
+				Silahkan kamu tulis kata dalam Bahasa Indonesia atau Inggris kemudian aku akan mengartikan untuk anda\n
+				`),
 		}
 
 		mess2 := Message{
 			Type: "text",
-			Text: "Perkenalkan nama saya Hero, saya adalah bot chat yang sedang dikembangkan ...",
+			Text: fmt.Sprintf(`
+				Thank you for adding me as your friend.\n
+				Introduce my name Hero, I am a chat bot being developed.\n
+				I will try to help you in communicating.\n
+				Please write the word in Indonesian or English then I will interpret for you.\n
+				`),
 		}
 		messages = append(messages, mess1)
 		messages = append(messages, mess2)
