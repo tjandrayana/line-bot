@@ -216,6 +216,10 @@ func checkMessage(dat Data) []Message {
 
 		msg := strings.ToLower(dat.Events[0].Message.Text)
 
+		if last := len(msg) - 1; last >= 0 && msg[last] == ' ' {
+			msg = msg[:last]
+		}
+
 		if flag {
 			result1, _ = gt.Translate(msg, "in", "en")
 			result1 = strings.ToLower(result1)
@@ -247,7 +251,7 @@ func checkMessage(dat Data) []Message {
 			result2, _ = gt.Translate(msg, "en", "in")
 			result2 = strings.ToLower(result2)
 
-			reply = fmt.Sprintf("\nAND %s In Indonesian '%s' \nmeans : \n'%s'", reply, msg, result2)
+			reply = fmt.Sprintf("\n%s AND \nIn Indonesian '%s' \nmeans : \n'%s'", reply, msg, result2)
 
 		}
 
