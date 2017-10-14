@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tjandrayana/line-bot/utils"
@@ -190,7 +191,9 @@ func checkMessage(dat Data) []Message {
 
 	} else {
 		var reply string
-		switch msg := dat.Events[0].Message.Text; msg {
+
+		msg := strings.ToLower(dat.Events[0].Message.Text)
+		switch msg {
 		case "pagi":
 			reply = "selamat pagi"
 		case "siang":
@@ -205,7 +208,6 @@ func checkMessage(dat Data) []Message {
 			reply = "test"
 		default:
 			reply = msg + " juga ... hehehe"
-
 		}
 
 		mess1 := Message{
