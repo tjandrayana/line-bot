@@ -82,11 +82,13 @@ func Triger(c *gin.Context) {
 		log.Println(err)
 	}
 
-	if err := reply(dat); err != nil {
+	messages := checkMessage(dat)
+
+	if err := reply(dat, messages); err != nil {
 		log.Println("Reply ERROR = ", err)
 	}
 
-	if err := pushMessage(dat); err != nil {
+	if err := pushMessage(dat, messages); err != nil {
 		log.Println("Push Message ERROR = ", err)
 	}
 
@@ -114,19 +116,7 @@ type PushMessage struct {
 	To       string    `json:"to"`
 }
 
-func reply(dat Data) error {
-
-	mess1 := Message{
-		Type: "text",
-		Text: "Hai User ... ",
-	}
-
-	mess2 := Message{
-		Type: "text",
-		Text: "May I help you ...? ",
-	}
-
-	messages := []Message{mess1, mess2}
+func reply(dat Data, messages []Message) error {
 
 	rep := Reply{
 		ReplyToken: dat.Events[0].ReplyToken,
@@ -142,30 +132,16 @@ func reply(dat Data) error {
 
 	agent.Headers["Authorization"] = "Bearer " + os.Getenv("channelAccessToken")
 
-	body, err := agent.DoReq()
+	_, err := agent.DoReq()
 	if err != nil {
 		log.Println(err)
 		return err
 	}
 
-	fmt.Printf("\n Body Reply : %+v\n", string(*body))
-
 	return nil
 }
 
-func pushMessage(dat Data) error {
-
-	mess1 := Message{
-		Type: "text",
-		Text: "Hai User ... ",
-	}
-
-	mess2 := Message{
-		Type: "text",
-		Text: "May I help you ...? ",
-	}
-
-	messages := []Message{mess1, mess2}
+func pushMessage(dat Data, messages []Message) error {
 
 	rep := PushMessage{
 		To:       wawan,
@@ -181,17 +157,65 @@ func pushMessage(dat Data) error {
 
 	agent.Headers["Authorization"] = "Bearer " + os.Getenv("channelAccessToken")
 
-	body, err := agent.DoReq()
+	_, err := agent.DoReq()
 	if err != nil {
 		log.Println(err)
 		return err
 	}
 
-	fmt.Printf("\n Body Push Message : %+v\n", string(*body))
-
 	return nil
 }
 
 const (
-	wawan string = "U0d7ba35d0e9e44f209d37f9bdf81d2b9"
+	wawan  string = "U0d7ba35d0e9e44f209d37f9bdf81d2b9"
+	dwicky string = "U4d3ecc4048a8e14040f28af321c089ef"
 )
+
+func checkMessage(dat Data) []Message {
+
+	var messages []Message
+
+	if dat.Events[0].Type == "follow" {
+		mess1 := Message{
+			Type: "text",
+			Text: "Thx ya sudah add aku sebagai teman kamu.",
+		}
+
+		mess2 := Message{
+			Type: "text",
+			Text: "Perkenalkan nama saya Hero, saya adalah bot chat yang sedang dikembangkan ...",
+		}
+		messages = append(messages, mess1)
+		messages = append(messages, mess2)
+
+	} else {
+		var reply string
+		switch msg := dat.Events[0].Message.Text; msg {
+		case "pagi":
+			reply = "selamat pagi"
+		case "siang":
+			reply = "selamat siang"
+		case "sore":
+			reply = "selamat sore"
+		case "malam":
+			reply = "selamat malam"
+		case "tes":
+			reply = "tes"
+		case "test":
+			reply = "test"
+		default:
+			reply = msg + " juga ... hehehe"
+
+		}
+
+		mess1 := Message{
+			Type: "text",
+			Text: reply,
+		}
+
+		messages = append(messages, mess1)
+	}
+
+	return messages
+
+}
