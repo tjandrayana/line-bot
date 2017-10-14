@@ -51,6 +51,12 @@ func main() {
 	// result, _ := gt.Translate(text, "in", "eng")
 	// fmt.Println(result)
 
+	User = make(map[string]string)
+
+	User[fery] = "Fery"
+	User[wawan] = "Wawan"
+	User[dwicky] = "Dwicky"
+
 	r := gin.New()
 	r.GET("/ping", ping)
 
@@ -176,7 +182,10 @@ func pushMessage(dat Data, messages []Message) error {
 const (
 	wawan  string = "U0d7ba35d0e9e44f209d37f9bdf81d2b9"
 	dwicky string = "U4d3ecc4048a8e14040f28af321c089ef"
+	fery   string = "Ud92705b0a3468dc19885afea426ad219"
 )
+
+var User map[string]string
 
 func checkMessage(dat Data) []Message {
 
@@ -203,7 +212,12 @@ func checkMessage(dat Data) []Message {
 		result, _ := gt.Translate(msg, "in", "eng")
 		fmt.Println(result)
 
-		reply = fmt.Sprintf("In english %s means : \n%s", msg, result)
+		namaUser := User[dat.Events[0].Source.UserID]
+		if namaUser == "" {
+			namaUser = "hei "
+		}
+
+		reply = fmt.Sprintf(`%s, In english "%s" \nmeans : \n%s`, namaUser, msg, result)
 
 		mess1 := Message{
 			Type: "text",
