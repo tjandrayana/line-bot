@@ -37,6 +37,8 @@ func CheckMessage(dat Data) []Message {
 			msg = msg[:last]
 		}
 
+		fmt.Printf("\nMessages : %s\n", msg)
+
 		if flag {
 			result1, _ = gt.Translate(msg, "in", "en")
 			result1 = strings.ToLower(result1)
