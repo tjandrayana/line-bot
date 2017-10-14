@@ -207,19 +207,40 @@ func checkMessage(dat Data) []Message {
 		messages = append(messages, mess2)
 
 	} else {
-		var reply string
-
-		msg := strings.ToLower(dat.Events[0].Message.Text)
-
-		result, _ := gt.Translate(msg, "in", "eng")
-		fmt.Println(result)
-
+		var reply, result1, result2 string
+		flag := true
 		namaUser := User[dat.Events[0].Source.UserID]
 		if namaUser == "" {
 			namaUser = "hei "
 		}
 
-		reply = fmt.Sprintf("%s, In english '%s' \nmeans : \n'%s'", namaUser, msg, result)
+		msg := strings.ToLower(dat.Events[0].Message.Text)
+
+		if flag {
+			result1, _ = gt.Translate(msg, "in", "eng")
+			result1 = strings.ToLower(result1)
+			fmt.Println(result1)
+		}
+
+		if result1 != msg {
+			reply = fmt.Sprintf("%s, In english '%s' \nmeans : \n'%s'", namaUser, msg, result1)
+			flag = false
+		}
+
+		if flag {
+			result1, _ = gt.Translate(msg, "eng", "in")
+			result1 = strings.ToLower(result1)
+			fmt.Println(result1)
+		}
+
+		if result2 != msg {
+			reply = fmt.Sprintf("%s, In Indonesian '%s' \nmeans : \n'%s'", namaUser, msg, result2)
+			flag = false
+		}
+
+		if flag {
+			reply = fmt.Sprintf("%s, '%s' \nmeans : \n'%s'", namaUser, msg, result2)
+		}
 
 		mess1 := Message{
 			Type: "text",
