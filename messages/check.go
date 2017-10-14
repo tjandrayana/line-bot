@@ -42,10 +42,14 @@ func CheckMessage(dat Data) []Message {
 		if flag {
 			result1, _ = gt.Translate(msg, "in", "en")
 			result1 = strings.ToLower(result1)
-			fmt.Println(result1)
-			if result1 != msg {
-				reply = fmt.Sprintf("%s, In English '%s' \nMeans : \n'%s'", namaUser, msg, result1)
-				flag = false
+			similarity := checkSimilarity(msg, result1)
+			fmt.Println("\nResult1 = ", result1, "\nSimilarity : ", similarity)
+
+			if similarity < 0.85 {
+				if result1 != msg {
+					reply = fmt.Sprintf("%s, In English '%s' \nMeans : \n'%s'", namaUser, msg, result1)
+					flag = false
+				}
 			}
 
 		}
@@ -53,10 +57,14 @@ func CheckMessage(dat Data) []Message {
 		if flag {
 			result2, _ = gt.Translate(msg, "en", "in")
 			result2 = strings.ToLower(result2)
-			fmt.Println(result2)
-			if result2 != msg {
-				reply = fmt.Sprintf("%s, In Bahasa '%s' \nMeans : \n'%s'", namaUser, msg, result2)
-				flag = false
+
+			similarity := checkSimilarity(msg, result2)
+			fmt.Println("\nResult2 = ", result2, "\nSimilarity : ", similarity)
+			if similarity < 0.85 {
+				if result2 != msg {
+					reply = fmt.Sprintf("%s, In Bahasa '%s' \nMeans : \n'%s'", namaUser, msg, result2)
+					flag = false
+				}
 			}
 		}
 
@@ -93,4 +101,25 @@ func validateSignature(channelSecret, signature string, body []byte) bool {
 	hash := hmac.New(sha256.New, []byte(channelSecret))
 	hash.Write(body)
 	return hmac.Equal(decoded, hash.Sum(nil))
+}
+
+func checkSimilarity(messages, messages2 string) float64 {
+	var similarity float64
+
+	arrMessages1 := strings.Split(messages, " ")
+	arrMessages2 := strings.Split(messages2, " ")
+
+	var count int
+
+	for i := 0; i < len(arrMessages2); i++ {
+		for j := i; j < len(arrMessages1); j++ {
+			if arrMessages2[i] == arrMessages1[j] {
+				count++
+			}
+		}
+	}
+
+	similarity = float64(count / len(arrMessages1))
+
+	return similarity
 }
