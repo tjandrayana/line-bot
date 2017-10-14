@@ -217,7 +217,7 @@ func checkMessage(dat Data) []Message {
 			namaUser = "hei "
 		}
 
-		reply = fmt.Sprintf(`%s, In english "%s" \nmeans : \n%s`, namaUser, msg, result)
+		reply = fmt.Sprintf("%s, In english '%s' \nmeans : \n'%s'", namaUser, msg, result)
 
 		mess1 := Message{
 			Type: "text",
