@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "pKLLuthOmyQ22xlRpQ8AX3NsouQ=",
+			"path": "github.com/bas24/googletranslatefree",
+			"revision": "07873a6de396ef17d2a843014a4bde1a30fa130c",
+			"revisionTime": "2017-07-19T05:38:03Z"
+		},
+		{
 			"checksumSHA1": "QeKwBtN2df+j+4stw3bQJ6yO4EY=",
 			"path": "github.com/gin-contrib/sse",
 			"revision": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae",
@@ -51,6 +57,48 @@
 			"revisionTime": "2017-09-25T05:49:04Z"
 		},
 		{
+			"checksumSHA1": "/75oK5RVdiy+bYLaLKcysy/NRLc=",
+			"path": "github.com/robertkrimen/otto",
+			"revision": "68a29f5e29b18d7367e686c43cf74eba1900f548",
+			"revisionTime": "2017-10-11T06:05:57Z"
+		},
+		{
+			"checksumSHA1": "q1HKpLIWi3tTT5W5LqMlwPcGmyQ=",
+			"path": "github.com/robertkrimen/otto/ast",
+			"revision": "68a29f5e29b18d7367e686c43cf74eba1900f548",
+			"revisionTime": "2017-10-11T06:05:57Z"
+		},
+		{
+			"checksumSHA1": "L0KsB2EzTlPgv0iae3q3SukNW7U=",
+			"path": "github.com/robertkrimen/otto/dbg",
+			"revision": "68a29f5e29b18d7367e686c43cf74eba1900f548",
+			"revisionTime": "2017-10-11T06:05:57Z"
+		},
+		{
+			"checksumSHA1": "euDLJKhw4doeTSxjEoezjxYXLzs=",
+			"path": "github.com/robertkrimen/otto/file",
+			"revision": "68a29f5e29b18d7367e686c43cf74eba1900f548",
+			"revisionTime": "2017-10-11T06:05:57Z"
+		},
+		{
+			"checksumSHA1": "LLuLITFO8chqSG0+APJIy5NtOHU=",
+			"path": "github.com/robertkrimen/otto/parser",
+			"revision": "68a29f5e29b18d7367e686c43cf74eba1900f548",
+			"revisionTime": "2017-10-11T06:05:57Z"
+		},
+		{
+			"checksumSHA1": "7J/7NaYRqKhBvZ+dTIutsEoEgFw=",
+			"path": "github.com/robertkrimen/otto/registry",
+			"revision": "68a29f5e29b18d7367e686c43cf74eba1900f548",
+			"revisionTime": "2017-10-11T06:05:57Z"
+		},
+		{
+			"checksumSHA1": "/jMXYuXycBpTqWhRyJ2xsqvHvQI=",
+			"path": "github.com/robertkrimen/otto/token",
+			"revision": "68a29f5e29b18d7367e686c43cf74eba1900f548",
+			"revisionTime": "2017-10-11T06:05:57Z"
+		},
+		{
 			"checksumSHA1": "wJxCX8tx7DLOLXx3wWORAuqg0f8=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "f76f59a92f8224c695c0e2c401b9ad17e820a8f5",
@@ -79,6 +127,18 @@
 			"path": "gopkg.in/go-playground/validator.v8",
 			"revision": "5f1438d3fca68893a817e4a66806cea46a9e4ebf",
 			"revisionTime": "2017-07-30T05:02:35Z"
+		},
+		{
+			"checksumSHA1": "4BwmmgQUhWtizsR2soXND0nqZ1I=",
+			"path": "gopkg.in/sourcemap.v1",
+			"revision": "6e83acea0053641eff084973fee085f0c193c61a",
+			"revisionTime": "2017-02-13T14:20:43Z"
+		},
+		{
+			"checksumSHA1": "GDXPA04g0Dfwu2w++JiOKkYuZEc=",
+			"path": "gopkg.in/sourcemap.v1/base64vlq",
+			"revision": "6e83acea0053641eff084973fee085f0c193c61a",
+			"revisionTime": "2017-02-13T14:20:43Z"
 		},
 		{
 			"checksumSHA1": "fALlQNY1fM99NesfLJ50KguWsio=",
