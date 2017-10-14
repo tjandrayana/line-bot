@@ -52,7 +52,7 @@ func CheckMessage(dat Data) []Message {
 			result1 = strings.ToLower(result1)
 			fmt.Println(result1)
 			if result1 != msg {
-				reply = fmt.Sprintf("%s, In english '%s' \nmeans : \n'%s'", namaUser, msg, result1)
+				reply = fmt.Sprintf("%s, In English '%s' \nmeans : \n'%s'", namaUser, msg, result1)
 				flag = false
 			}
 
@@ -63,7 +63,7 @@ func CheckMessage(dat Data) []Message {
 			result2 = strings.ToLower(result2)
 			fmt.Println(result2)
 			if result2 != msg {
-				reply = fmt.Sprintf("%s, In Indonesian '%s' \nmeans : \n'%s'", namaUser, msg, result2)
+				reply = fmt.Sprintf("%s, In Bahasa '%s' \nmeans : \n'%s'", namaUser, msg, result2)
 				flag = false
 			}
 		}
@@ -73,12 +73,12 @@ func CheckMessage(dat Data) []Message {
 			result1 = strings.ToLower(result1)
 
 			reply = namaUser + ", "
-			reply = fmt.Sprintf("%s In english '%s' \nmeans : \n'%s'\n", reply, msg, result1)
+			reply = fmt.Sprintf("%s In English '%s' \nmeans : \n'%s'\n", reply, msg, result1)
 
 			result2, _ = gt.Translate(msg, "en", "in")
 			result2 = strings.ToLower(result2)
 
-			reply = fmt.Sprintf("\n%s AND \nIn Indonesian '%s' \nmeans : \n'%s'", reply, msg, result2)
+			reply = fmt.Sprintf("\n%s AND \nIn Bahasa '%s' \nmeans : \n'%s'", reply, msg, result2)
 
 		}
 
