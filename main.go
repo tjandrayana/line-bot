@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+	messages.Init()
 	r := gin.New()
 	r.GET("/ping", ping)
 	r.POST("/line/triger", messages.Triger)

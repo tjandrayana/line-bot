@@ -35,8 +35,20 @@ func CheckMessage(dat Data) []Message {
 
 		msg := strings.ToLower(dat.Events[0].Message.Text)
 
-		if last := len(msg) - 1; last >= 0 && msg[last] == ' ' {
-			msg = msg[:last]
+		msg = p.Special.ReplaceAllString(msg, " ")
+		arrMsg := strings.Split(msg, " ")
+		msg = ""
+
+		for i := range arrMsg {
+			if arrMsg[i] == " " {
+				continue
+			}
+			fmt.Println(arrMsg[i])
+			msg += arrMsg[i]
+			if i < len(arrMsg)-2 {
+				msg += " "
+			}
+
 		}
 
 		fmt.Printf("\nMessages : %s\n", msg)
