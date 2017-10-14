@@ -56,6 +56,7 @@ func main() {
 	User[fery] = "Fery"
 	User[wawan] = "Wawan"
 	User[dwicky] = "Dwicky"
+	User[yosia] = "Yosia"
 
 	r := gin.New()
 	r.GET("/ping", ping)
@@ -183,6 +184,7 @@ const (
 	wawan  string = "U0d7ba35d0e9e44f209d37f9bdf81d2b9"
 	dwicky string = "U4d3ecc4048a8e14040f28af321c089ef"
 	fery   string = "Ud92705b0a3468dc19885afea426ad219"
+	yosia  string = "Ud71e2b65ef7569017bc9f32712cee4d5"
 )
 
 var User map[string]string
