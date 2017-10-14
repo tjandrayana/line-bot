@@ -16,22 +16,12 @@ func CheckMessage(dat Data) []Message {
 	if dat.Events[0].Type == "follow" {
 		mess1 := Message{
 			Type: "text",
-			Text: fmt.Sprintf(`
-				Terima kasih sudah menambahkan aku sebagai teman kamu.\n
-				Perkenalkan namaku Hero, Aku adalah bot chat yang sedang dikembangkan ...\n
-				Aku akan mencoba membantumu dalam berkomunikasi\n
-				Silahkan kamu tulis kata dalam Bahasa Indonesia atau Inggris kemudian aku akan mengartikan untuk anda\n
-				`),
+			Text: fmt.Sprintf("Terima kasih sudah menambahkan aku sebagai teman kamu.\nPerkenalkan namaku Hero, Aku adalah bot chat yang sedang dikembangkan ...\nAku akan mencoba membantumu dalam berkomunikasi\nSilahkan kamu tulis kata dalam Bahasa Indonesia atau Inggris kemudian aku akan mengartikan untuk anda\n"),
 		}
 
 		mess2 := Message{
 			Type: "text",
-			Text: fmt.Sprintf(`
-				Thank you for adding me as your friend.\n
-				Introduce my name Hero, I am a chat bot being developed.\n
-				I will try to help you in communicating.\n
-				Please write the word in Indonesian or English then I will interpret for you.\n
-				`),
+			Text: fmt.Sprintf("Thank you for adding me as your friend.\nIntroduce my name Hero, I am a chat bot being developed.\nI will try to help you in communicating.\nPlease write the word in Indonesian or English then I will interpret for you.\n"),
 		}
 		messages = append(messages, mess1)
 		messages = append(messages, mess2)
@@ -52,7 +42,7 @@ func CheckMessage(dat Data) []Message {
 			result1 = strings.ToLower(result1)
 			fmt.Println(result1)
 			if result1 != msg {
-				reply = fmt.Sprintf("%s, In English '%s' \nmeans : \n'%s'", namaUser, msg, result1)
+				reply = fmt.Sprintf("%s, In English '%s' \nMeans : \n'%s'", namaUser, msg, result1)
 				flag = false
 			}
 
@@ -63,7 +53,7 @@ func CheckMessage(dat Data) []Message {
 			result2 = strings.ToLower(result2)
 			fmt.Println(result2)
 			if result2 != msg {
-				reply = fmt.Sprintf("%s, In Bahasa '%s' \nmeans : \n'%s'", namaUser, msg, result2)
+				reply = fmt.Sprintf("%s, In Bahasa '%s' \nMeans : \n'%s'", namaUser, msg, result2)
 				flag = false
 			}
 		}
@@ -73,12 +63,12 @@ func CheckMessage(dat Data) []Message {
 			result1 = strings.ToLower(result1)
 
 			reply = namaUser + ", "
-			reply = fmt.Sprintf("%s In English '%s' \nmeans : \n'%s'\n", reply, msg, result1)
+			reply = fmt.Sprintf("%s In English '%s' \nMeans : \n'%s'\n", reply, msg, result1)
 
 			result2, _ = gt.Translate(msg, "en", "in")
 			result2 = strings.ToLower(result2)
 
-			reply = fmt.Sprintf("\n%s AND \nIn Bahasa '%s' \nmeans : \n'%s'", reply, msg, result2)
+			reply = fmt.Sprintf("\n%s AND \nIn Bahasa '%s' \nMeans : \n'%s'", reply, msg, result2)
 
 		}
 
