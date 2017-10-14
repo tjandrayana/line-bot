@@ -5,6 +5,8 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"os"
+	"strconv"
 	"strings"
 
 	gt "github.com/bas24/googletranslatefree"
@@ -39,13 +41,19 @@ func CheckMessage(dat Data) []Message {
 
 		fmt.Printf("\nMessages : %s\n", msg)
 
+		similarityThreshold := os.Getenv("similarityThreshold")
+		similarityThresholdFloat, err := strconv.ParseFloat(similarityThreshold, 64)
+		if err != nil {
+			similarityThresholdFloat = 0.85
+		}
+
 		if flag {
 			result1, _ = gt.Translate(msg, "in", "en")
 			result1 = strings.ToLower(result1)
 			similarity := checkSimilarity2(msg, result1)
 			fmt.Println("\nResult1 = ", result1, "\nSimilarity : ", similarity)
 
-			if similarity < 0.85 {
+			if similarity < similarityThresholdFloat {
 				if result1 != msg {
 					reply = fmt.Sprintf("%s, In English '%s' \nMeans : \n'%s'", namaUser, msg, result1)
 					flag = false
@@ -60,7 +68,7 @@ func CheckMessage(dat Data) []Message {
 
 			similarity := checkSimilarity2(msg, result2)
 			fmt.Println("\nResult2 = ", result2, "\nSimilarity : ", similarity)
-			if similarity < 0.85 {
+			if similarity < similarityThresholdFloat {
 				if result2 != msg {
 					reply = fmt.Sprintf("%s, In Bahasa '%s' \nMeans : \n'%s'", namaUser, msg, result2)
 					flag = false
