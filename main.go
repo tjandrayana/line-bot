@@ -164,7 +164,7 @@ func pushMessage(dat Data) error {
 	messages := []Message{mess1, mess2}
 
 	rep := Reply{
-		To:       "mikhael73",
+		To:       "U772346mikhael73",
 		Messages: messages,
 	}
 
