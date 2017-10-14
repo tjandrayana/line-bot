@@ -45,7 +45,7 @@ func CheckMessage(dat Data) []Message {
 			}
 			fmt.Println(arrMsg[i])
 			msg += arrMsg[i]
-			if i < len(arrMsg)-2 {
+			if i < len(arrMsg)-1 {
 				msg += " "
 			}
 
