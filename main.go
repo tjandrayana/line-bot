@@ -220,22 +220,21 @@ func checkMessage(dat Data) []Message {
 			result1, _ = gt.Translate(msg, "in", "eng")
 			result1 = strings.ToLower(result1)
 			fmt.Println(result1)
-		}
+			if result1 != msg {
+				reply = fmt.Sprintf("%s, In english '%s' \nmeans : \n'%s'", namaUser, msg, result1)
+				flag = false
+			}
 
-		if result1 != msg {
-			reply = fmt.Sprintf("%s, In english '%s' \nmeans : \n'%s'", namaUser, msg, result1)
-			flag = false
 		}
 
 		if flag {
 			result1, _ = gt.Translate(msg, "eng", "in")
 			result1 = strings.ToLower(result1)
 			fmt.Println(result1)
-		}
-
-		if result2 != msg {
-			reply = fmt.Sprintf("%s, In Indonesian '%s' \nmeans : \n'%s'", namaUser, msg, result2)
-			flag = false
+			if result2 != msg {
+				reply = fmt.Sprintf("%s, In Indonesian '%s' \nmeans : \n'%s'", namaUser, msg, result2)
+				flag = false
+			}
 		}
 
 		if flag {
