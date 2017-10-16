@@ -9,6 +9,13 @@
 			"revisionTime": "2017-07-19T05:38:03Z"
 		},
 		{
+			"checksumSHA1": "OFu4xJEIjiI8Suu+j/gabfp+y6Q=",
+			"origin": "github.com/stretchr/testify/vendor/github.com/davecgh/go-spew/spew",
+			"path": "github.com/davecgh/go-spew/spew",
+			"revision": "4d4bfba8f1d1027c4fdbe371823030df51419987",
+			"revisionTime": "2017-01-30T11:31:45Z"
+		},
+		{
 			"checksumSHA1": "QeKwBtN2df+j+4stw3bQJ6yO4EY=",
 			"path": "github.com/gin-contrib/sse",
 			"revision": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae",
@@ -57,6 +64,13 @@
 			"revisionTime": "2017-09-25T05:49:04Z"
 		},
 		{
+			"checksumSHA1": "zKKp5SZ3d3ycKe4EKMNT0BqAWBw=",
+			"origin": "github.com/stretchr/testify/vendor/github.com/pmezard/go-difflib/difflib",
+			"path": "github.com/pmezard/go-difflib/difflib",
+			"revision": "4d4bfba8f1d1027c4fdbe371823030df51419987",
+			"revisionTime": "2017-01-30T11:31:45Z"
+		},
+		{
 			"checksumSHA1": "/75oK5RVdiy+bYLaLKcysy/NRLc=",
 			"path": "github.com/robertkrimen/otto",
 			"revision": "68a29f5e29b18d7367e686c43cf74eba1900f548",
@@ -97,6 +111,18 @@
 			"path": "github.com/robertkrimen/otto/token",
 			"revision": "68a29f5e29b18d7367e686c43cf74eba1900f548",
 			"revisionTime": "2017-10-11T06:05:57Z"
+		},
+		{
+			"checksumSHA1": "7aVQHxIZZYAb+Tq0pbGLL8j+4cM=",
+			"path": "github.com/robfig/cron",
+			"revision": "df38d32658d8788cd446ba74db4bb5375c4b0cb3",
+			"revisionTime": "2017-03-09T13:24:18Z"
+		},
+		{
+			"checksumSHA1": "JXUVA1jky8ZX8w09p2t5KLs97Nc=",
+			"path": "github.com/stretchr/testify/assert",
+			"revision": "4d4bfba8f1d1027c4fdbe371823030df51419987",
+			"revisionTime": "2017-01-30T11:31:45Z"
 		},
 		{
 			"checksumSHA1": "wJxCX8tx7DLOLXx3wWORAuqg0f8=",
