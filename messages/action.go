@@ -40,9 +40,9 @@ func Triger(c *gin.Context) {
 		log.Println("Reply ERROR = ", err)
 	}
 
-	if err := SendMessages(dat, messages); err != nil {
-		log.Println("Push Message ERROR = ", err)
-	}
+	// if err := SendMessages(dat, messages); err != nil {
+	// 	log.Println("Push Message ERROR = ", err)
+	// }
 
 	fmt.Println("\nSuccess\n")
 
