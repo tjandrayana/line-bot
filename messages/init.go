@@ -18,7 +18,7 @@ func Init() {
 	p = parser.New()
 
 	m.cron = cron.New()
-	m.cron.AddFunc("0 10 14 * * *", func() {
+	m.cron.AddFunc("0 0 0 * * *", func() {
 		m.doJob()
 	})
 
