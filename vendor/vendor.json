@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "nVFu2wH5Gw9bq0R8749fXoWxUXE=",
+			"path": "github.com/anaskhan96/soup",
+			"revision": "57bc26db319a1489e4b356a974d8b74c0d91244b",
+			"revisionTime": "2017-10-12T14:45:17Z"
+		},
+		{
 			"checksumSHA1": "pKLLuthOmyQ22xlRpQ8AX3NsouQ=",
 			"path": "github.com/bas24/googletranslatefree",
 			"revision": "07873a6de396ef17d2a843014a4bde1a30fa130c",
@@ -139,6 +145,18 @@
 		{
 			"checksumSHA1": "WHc3uByvGaMcnSoI21fhzYgbOgg=",
 			"path": "golang.org/x/net/context/ctxhttp",
+			"revision": "feeb485667d1fdabe727840fe00adc22431bc86e",
+			"revisionTime": "2017-05-02T17:39:58Z"
+		},
+		{
+			"checksumSHA1": "vqc3a+oTUGX8PmD0TS+qQ7gmN8I=",
+			"path": "golang.org/x/net/html",
+			"revision": "feeb485667d1fdabe727840fe00adc22431bc86e",
+			"revisionTime": "2017-05-02T17:39:58Z"
+		},
+		{
+			"checksumSHA1": "00eQaGynDYrv3tL+C7l9xH0IDZg=",
+			"path": "golang.org/x/net/html/atom",
 			"revision": "feeb485667d1fdabe727840fe00adc22431bc86e",
 			"revisionTime": "2017-05-02T17:39:58Z"
 		},
