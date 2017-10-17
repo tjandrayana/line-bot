@@ -76,7 +76,7 @@ func ReplyMessages(dat Data, messages []Message) error {
 
 func SendMessages(dat Data, messages []Message) error {
 
-	receiver := []string{wawan}
+	receiver := []string{wawan, grady}
 	rep := PushMulticastMessage{
 		To:       receiver,
 		Messages: messages,
