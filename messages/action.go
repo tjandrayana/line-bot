@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/anaskhan96/soup"
 	"github.com/gin-gonic/gin"
 	"github.com/tjandrayana/line-bot/utils"
 )
@@ -75,14 +76,16 @@ func ReplyMessages(dat Data, messages []Message) error {
 
 func SendMessages(dat Data, messages []Message) error {
 
-	rep := PushMessage{
-		To:       wawan,
+	receiver := []string{wawan, grady}
+	rep := PushMulticastMessage{
+		To:       receiver,
 		Messages: messages,
 	}
 
 	agent := utils.NewHTTPRequest()
 	agent.Url = "https://api.line.me"
-	agent.Path = "/v2/bot/message/push"
+	// agent.Path = "/v2/bot/message/push"
+	agent.Path = "/v2/bot/message/multicast"
 	agent.Method = "POST"
 	agent.IsJson = true
 	agent.Json = rep
@@ -100,4 +103,25 @@ func SendMessages(dat Data, messages []Message) error {
 
 const (
 	wawan string = "U0d7ba35d0e9e44f209d37f9bdf81d2b9"
+	grady string = "U8b8591bd75661e51f1a80f74f92d2734"
 )
+
+func Horoskop() string {
+
+	horoskop := ""
+
+	resp, err := soup.Get("https://www.astrology.com/horoscope/daily/today/sagittarius.html")
+	if err != nil {
+		os.Exit(1)
+	}
+	doc := soup.HTMLParse(resp)
+	links := doc.Find("div", "class", "daily-horoscope").FindAll("p")
+
+	for _, link := range links {
+		fmt.Println(link.Text())
+		horoskop = fmt.Sprintf("\n%s\n%s", horoskop, link.Text())
+	}
+
+	return horoskop
+	// fmt.Printf("\n%+v\n", links.Data)
+}

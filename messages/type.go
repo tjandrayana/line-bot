@@ -32,3 +32,8 @@ type PushMessage struct {
 	Messages []Message `json:"messages"`
 	To       string    `json:"to"`
 }
+
+type PushMulticastMessage struct {
+	Messages []Message `json:"messages"`
+	To       []string  `json:"to"`
+}

@@ -17,11 +17,11 @@ func Init() {
 
 	p = parser.New()
 
-	// m.cron = cron.New()
-	// m.cron.AddFunc("@every 1m", func() {
-	// 	m.doJob()
-	// })
+	m.cron = cron.New()
+	m.cron.AddFunc("@every 1m", func() {
+		m.doJob()
+	})
 
-	// m.cron.Start()
+	m.cron.Start()
 
 }
